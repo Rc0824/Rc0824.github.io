@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Demo</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="mystyle.css">
+    </head>
+    <body>
+        <div>
+            <h2>匯率轉換計算機</h2>
+            <label>請輸入台幣金額:</label>
+            <input type="text" id="money" placeholder="ex. 1000" value=""/>
+            <br><br>
+            <input id="btn" type="button" onclick="loadDoc()" value="Calculate"/>
+            <input id="resetBtn" type="button" onclick="reset()" value="Reset"/>    
+            <hr>
+            <table id="result"></table>
+        </div>
+
+        <script>
+
+            function loadDoc(){
+                const xhttp = new XMLHttpRequest();
+
+                if( isNaN(document.getElementById("money").value)){
+                    alert("請輸入數字");
+                    reset(); 
+                }
+
+                xhttp.onload=function(){
+                    myFunction(this);
+                }
+
+                xhttp.open("GET", "./rate.xml");
+                xhttp.send();
+            }
+
+            function myFunction(xml){
+                const xmlDoc = xml.responseXML;
+                const x = xmlDoc.getElementsByTagName("RATE");
+                let table ="<tr><th>幣別</th><th>金額</th></tr>";
+
+                for(let i=0;i<x.length;i++){
+                    const usd = (document.getElementById("money").value * x[i].getElementsByTagName("USD")[0].childNodes[0].nodeValue).toFixed(2);
+                    const jpy = (document.getElementById("money").value * x[i].getElementsByTagName("JPY")[0].childNodes[0].nodeValue).toFixed(2);
+                    const eur = (document.getElementById("money").value * x[i].getElementsByTagName("EUR")[0].childNodes[0].nodeValue).toFixed(2);
+                    const krw = (document.getElementById("money").value * x[i].getElementsByTagName("KRW")[0].childNodes[0].nodeValue).toFixed(2);
+                    const aud = (document.getElementById("money").value * x[i].getElementsByTagName("AUD")[0].childNodes[0].nodeValue).toFixed(2);
+
+                    table += 
+                    "<tr><td>USD</td><td>" + usd + "</td></tr>" +
+                    "<tr><td>JPY</td><td>" + jpy + "</td></tr>" +
+                    "<tr><td>EUR</td><td>" + eur + "</td></tr>" +
+                    "<tr><td>KRW</td><td>" + krw + "</td></tr>" +
+                    "<tr><td>AUD</td><td>" + aud + "</td></tr>";
+                }
+
+                document.getElementById("result").innerHTML = table;
+            }
+
+            function reset() {
+                document.getElementById("money").value = ""; 
+                document.getElementById("result").innerHTML = "";
+            }
+
+        </script>
+    </body>
+</html>
