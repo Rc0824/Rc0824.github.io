@@ -11,3 +11,6 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background-color: #8f1717;
 }
+body{
+    background: -webkit-linear-gradient(-8deg, rgb(156, 106, 216),rgb(185, 43, 155));
+}
