@@ -6,10 +6,10 @@ th,td{
     padding: 10px;
 }
 tr:nth-child(even) {
-    background: #4137af;
+    background: #3c859f;
 }
 tr:nth-child(odd) {
-    background-color: #8f1717;
+    background-color: #aed91f;
 }
 body{
     background: -webkit-linear-gradient(-8deg, rgb(156, 106, 216),rgb(185, 43, 155));
